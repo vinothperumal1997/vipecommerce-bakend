@@ -13,6 +13,8 @@ async function authToken(req, res, next) {
     if (!token) {
       return res.status(401).json({
         message: "Please login.....",
+        token: token || null,
+
         error: true,
         success: false,
       });
