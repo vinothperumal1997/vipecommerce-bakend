@@ -113,17 +113,17 @@ const userSignInController = async (req, res) => {
       secure: true,
       sameSite: "None",
     });
-    return res
-      .cookie("token", accessToken)
-      .cookie("refresh_token", refreshToken)
-      .status(200)
-      .json({
-        message: "Login successful",
-        success: true,
-        accessToken,
-        refreshToken,
-        user: { email: user.email },
-      });
+    return res.status(200).json({
+      message: "Login successful",
+      success: true,
+      accessToken,
+      refreshToken,
+      user: {
+        email: user.email,
+        name: user.name,
+        id: user._id,
+      },
+    });
   } catch (error) {
     console.error("Login Error:", error);
     return res.status(500).json({
