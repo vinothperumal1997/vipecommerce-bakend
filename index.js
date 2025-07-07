@@ -11,12 +11,24 @@ app.use(express.urlencoded({ limit: "10mb", extended: true }));
 
 app.use(cookieParser());
 
+const allowedOrigins = [
+  process.env.FRONTEND_URL, // your Vercel frontend
+  "http://localhost:3000", // local dev frontend
+];
+
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL,
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     credentials: true,
   })
 );
+
 app.use("/api", router);
 app.get("/", (req, res) => {
   res.send("Welcome to the API");
