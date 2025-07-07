@@ -16,6 +16,12 @@ const allowedOrigins = [
   "http://localhost:3000", // local dev frontend
 ];
 
+res.cookie("token", token, {
+  httpOnly: true,
+  secure: true, // only for HTTPS
+  sameSite: "None", // or "Lax" for same-origin
+});
+
 app.use(
   cors({
     origin: function (origin, callback) {
