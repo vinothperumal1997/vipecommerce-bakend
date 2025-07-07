@@ -102,7 +102,17 @@ const userSignInController = async (req, res) => {
 
     // Store refresh token
     // await addRefreshToken(refreshToken, user._id);
+    res.cookie("token", accessToken, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "None",
+    });
 
+    res.cookie("refresh_token", refreshToken, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "None",
+    });
     return res
       .cookie("token", accessToken)
       .cookie("refresh_token", refreshToken)
